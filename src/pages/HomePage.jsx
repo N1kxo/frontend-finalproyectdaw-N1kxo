@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import TweetList from '../components/TweetList';
-import TweetForm from '../components/TweetForm';
 import { tweetService } from '../services/apiService';
 
 const HomePage = () => {
@@ -20,15 +19,10 @@ const HomePage = () => {
     fetchTweets();
   }, []);
 
-  const handleNewTweet = () => {
-    fetchTweets();
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-700 to-gray-900 text-white">
+    <div className="min-h-screen w-full bg-gradient-to-b from-gray-700 to-gray-900 text-white flex flex-col">
       <Header />
       <main className="container mx-auto px-4 py-8">
-        <TweetForm onTweetPosted={handleNewTweet} />
         <TweetList tweets={tweets} />
       </main>
     </div>

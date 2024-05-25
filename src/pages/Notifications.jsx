@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { tweetService } from './apiService';
+import { tweetService } from '../services/apiService';
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);

@@ -34,7 +34,7 @@ const TweetForm = ({ onTweetPosted }) => {
       <textarea
         value={tweetContent}
         onChange={handleTweetChange}
-        placeholder="Write down what do you have in mind?"
+        placeholder="What do you have in mind?"
         className="w-full h-32 p-4 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
       ></textarea>
       <div className="flex justify-between mt-2">

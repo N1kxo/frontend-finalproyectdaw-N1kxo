@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import Header from '../components/Header';
 
 const Search = () => {
   const [query, setQuery] = useState('');
@@ -20,16 +21,7 @@ const Search = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-700 to-gray-900 text-white flex flex-col items-center">
-      <header className="bg-gray-800 py-4 w-full">
-        <div className="container mx-auto flex justify-between items-center px-4">
-          <div className="text-lg font-bold">Tweetscape</div>
-          <nav className="space-x-4">
-            <a href="/search" className="hover:underline">Search</a>
-            <a href="/profile" className="hover:underline">Profile</a>
-            <a href="/notifications" className="hover:underline">Notifications</a>
-          </nav>
-        </div>
-      </header>
+            <Header />
       <main className="flex-grow container mx-auto px-4 py-8">
         <form onSubmit={handleSearch} className="w-full max-w-lg mx-auto mb-8">
           <div className="flex items-center border-b border-b-2 border-gray-600 py-2">
