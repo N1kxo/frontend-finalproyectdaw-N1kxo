@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { userService } from '../services/apiService'; // Asegúrate de que la ruta sea correcta
+import { userService } from '../services/apiService';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
