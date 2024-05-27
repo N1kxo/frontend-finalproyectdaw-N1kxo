@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import Header from './components/Header';
+import PropTypes from 'prop-types';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 import HomePage from './pages/HomePage';
@@ -10,25 +10,17 @@ import PublishTweet from './pages/PublishTweet';
 import Search from './pages/Search';
 import { userService } from './services/apiService';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ children }) => {
   const isAuthenticated = !!localStorage.getItem('token');
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAuthenticated ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        )
-      }
-    />
-  );
+  return isAuthenticated ? children : <Navigate to="/login" />;
+};
+
+PrivateRoute.propTypes = {
+  children: PropTypes.element.isRequired,
 };
 
 const App = () => {
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const validateToken = async () => {
@@ -36,7 +28,6 @@ const App = () => {
       if (token) {
         try {
           await userService.validateToken(token);
-          setIsAuthenticated(true);
         } catch (error) {
           console.error('Invalid token:', error);
           localStorage.removeItem('token');
@@ -55,16 +46,35 @@ const App = () => {
   return (
     <Router>
       <div>
-        <Header />
-        <Switch>
-          <Route path="/login" component={LoginForm} />
-          <Route path="/register" component={RegisterForm} />
-          <PrivateRoute path="/delete" component={DeleteTweets} />
-          <PrivateRoute path="/notifications" component={Notifications} />
-          <PrivateRoute path="/publish" component={PublishTweet} />
-          <PrivateRoute path="/search" component={Search} />
-          <PrivateRoute path="/" component={HomePage} />
-        </Switch>
+        <Routes>
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/delete" element={
+            <PrivateRoute>
+              <DeleteTweets />
+            </PrivateRoute>
+          } />
+          <Route path="/notifications" element={
+            <PrivateRoute>
+              <Notifications />
+            </PrivateRoute>
+          } />
+          <Route path="/publish" element={
+            <PrivateRoute>
+              <PublishTweet />
+            </PrivateRoute>
+          } />
+          <Route path="/search" element={
+            <PrivateRoute>
+              <Search />
+            </PrivateRoute>
+          } />
+          <Route path="/" element={
+            <PrivateRoute>
+              <HomePage />
+            </PrivateRoute>
+          } />
+        </Routes>
       </div>
     </Router>
   );

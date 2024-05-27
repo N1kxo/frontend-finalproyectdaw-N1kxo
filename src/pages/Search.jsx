@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { tweetService } from '../apiService';
-import TweetList from './TweetList';
+import { tweetService } from '../services/apiService';
+import TweetList from '../components/TweetList';
 
 const Search = () => {
   const [query, setQuery] = useState('');

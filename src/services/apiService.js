@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://backend-tweetscape.vercel.app/';
 
 // Configuración de axios
 const axiosInstance = axios.create({
